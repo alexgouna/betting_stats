@@ -17,7 +17,7 @@ def my_sql_of_views(my_view):
         sql = "CREATE VIEW total_info_detailed AS " \
               "SELECT (SUBSTR(games_team_date_time,7,4) || '/' || SUBSTR(games_team_date_time,4,2) || '/' ||SUBSTR(games_team_date_time,1,2)) as date, " \
               "SUBSTR(games_team_date_time,12,5) as hour, t1.full_name AS Home, games_team_1_goal as goal_home, games_team_2_goal as goal_away, " \
-              "t2.full_name AS Away, games_team_1_corner  as corner_home, games_team_2_corner  as corner_home, " \
+              "t2.full_name AS Away, games_team_1_corner  as corner_home, games_team_2_corner  as corner_away, " \
               "games_team_1_shots as shots_home, games_team_2_shots as shots_away " \
               "FROM games as g " \
               "JOIN team_player_with_names t1 ON g.games_team_1_player_team_id = t1.player_team_id " \

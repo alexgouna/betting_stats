@@ -18,3 +18,6 @@ my_list_of_views = [
     'total_info',
     'total_info_detailed'
                     ]
+
+
+wait_time=15

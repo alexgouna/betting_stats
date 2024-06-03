@@ -145,8 +145,7 @@ def esoccer_move_data():
         conn = sqlite3.connect("my_database_esoccer.db")
         c = conn.cursor()
         if site_page%10 ==0 :
-            for i in range(1,10):
-                time.sleep(1)
+            time.sleep(global_variables.wait_time)
 
         for record in my_list_with_esoccer_data(site_page):
             if the_record_is_valid(record[2]):
