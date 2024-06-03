@@ -7,15 +7,15 @@ import global_variables
 
 root = Tk()
 root.title("Main!!!")
-root.geometry("300x300")
+root.geometry("400x270")
 
 def database_update():
     try:
-        global_variables.my_total_pages = int(pages_entry1.get())
+        global_variables.my_total_pages = int(my_entry_end_page.get())
     except:
         global_variables.my_total_pages=1
     try:
-        global_variables.my_first_page = int(pages_entry2.get())
+        global_variables.my_first_page = int(my_entry_start_page.get())
     except:
         global_variables.my_first_page=1
 
@@ -38,29 +38,32 @@ clicked = StringVar()
 clicked.set(options[0])
 drop = OptionMenu(root, clicked, *options)
 
-my_label1 = Label(root, text="press the 'Submit' to update the database")
-my_label2 = Label(root, text="Pages to search(recomend 20):")
-pages_entry1=Entry(root)
-my_label3 = Label(root, text="Pages to Start (recomend 1):")
-pages_entry2=Entry(root)
-my_label4 = Label(root, text="no use for the momment:")
+my_label_title = Label(root, text="Press the 'Submit' to update the database",font=(20))
+my_label_start_page = Label(root, text="Pages to End search (recomend 20):")
+my_entry_start_page=Entry(root)
+my_label_end_page = Label(root, text="Pages to Start Search (recomend 1):")
+my_entry_end_page=Entry(root)
+my_label4 = Label(root, text="no use for the moment:")
 pages_entry3=Entry(root)
-button_submit = Button(root,text='Submit',command=database_update)
+button_submit = Button(root,text='Submit',command=database_update,font=(25))
+my_label_select_if_first_use = Label(root, text="Select if is First Use")
 
-my_label1.grid(row=0,column=0,columnspan=2)
 
-my_label2.grid(row=2,column=0)
-pages_entry1.grid(row=2,column=1)
+my_label_title.grid(row=0,column=0,columnspan=3,pady=10,padx = 15)
 
-my_label3.grid(row=1,column=0)
-pages_entry2.grid(row=1,column=1)
+my_label_start_page.grid(row=2,column=0,pady=5,padx = 15)
+my_entry_start_page.grid(row=2,column=1,pady=5,padx = 15)
 
-my_label4.grid(row=3,column=0)
-pages_entry3.grid(row=3,column=1)
+my_label_end_page.grid(row=1,column=0,pady=5,padx = 15)
+my_entry_end_page.grid(row=1,column=1,pady=5,padx = 15)
 
-button_submit.grid(row=4,column=0,columnspan=2)
+my_label4.grid(row=3,column=0,pady=5,padx = 15)
+pages_entry3.grid(row=3,column=1,pady=5,padx = 15)
 
-drop.grid(row=5,column=0,columnspan=2)
+my_label_select_if_first_use.grid(row=4,column=0,pady=5,padx = 15)
+drop.grid(row=4,column=1,pady=5,padx = 15)
+
+button_submit.grid(row=5,column=0,columnspan=2,pady=5,padx = 15)
 
 print("----------------THE END-----------------")
 
