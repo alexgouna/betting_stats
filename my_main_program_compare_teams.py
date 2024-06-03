@@ -33,11 +33,6 @@ def compare(team1, team2):
     my_data_team_1 = my_data(team1)
     my_data_team_2 = my_data(team2)
 
-
-
-
-    print(my_data_team_1)
-    print(my_data_team_2)
     conn.commit()
     conn.close()
     return my_data_team_1,my_data_team_2

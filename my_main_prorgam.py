@@ -61,15 +61,22 @@ def my_tree_view(my_view,root):
     return my_tree
     # my_tree.grid(row=1, column=0, columnspan=3, pady=5, padx=15)
 
+def show(my_data):
+    root_show = Tk()
+    root_show.title("Bet stats!!!")
+    root_show.geometry("1000x1000")
 
 
+
+
+    mainloop()
 
 def start():
     global my_tree
     global vsb
-    root = Tk()
-    root.title("Bet stats!!!")
-    root.geometry("1000x1000")
+    root_main = Tk()
+    root_main.title("Bet stats!!!")
+    root_main.geometry("1000x1000")
 
     options = [
         "Players with teams",
@@ -83,13 +90,13 @@ def start():
         vsb.destroy()
         my_tree.destroy()
         if clicked.get() == "Players with teams":
-            my_tree=my_tree_view("team_player_with_names",root)
+            my_tree=my_tree_view("team_player_with_names",root_main)
         elif clicked.get() == "Total Info":
-            my_tree=my_tree_view("total_info",root)
+            my_tree=my_tree_view("total_info",root_main)
         elif clicked.get() == "Total Info details":
-            my_tree=my_tree_view("total_info_detailed",root)
+            my_tree=my_tree_view("total_info_detailed",root_main)
 
-        vsb = Scrollbar(root, orient="vertical", command=my_tree.yview)
+        vsb = Scrollbar(root_main, orient="vertical", command=my_tree.yview)
         my_tree.configure(yscrollcommand=vsb.set)
         my_tree.pack(side=LEFT, fill=BOTH, expand=True)
         vsb.pack(side=RIGHT, fill=Y)
@@ -103,17 +110,20 @@ def start():
             item_text = item['values']
             my_data = my_main_program_compare_teams.compare(item_text[2],item_text[5])
             print(my_data)
-    clicked = StringVar(root)
+            show(my_data)
+
+
+    clicked = StringVar(root_main)
     clicked.set(options[0])
-    drop = OptionMenu(root, clicked, *options)
+    drop = OptionMenu(root_main, clicked, *options)
 
     drop.pack()
     clicked.trace('w',choose)
 
-    my_tree = my_tree_view("total_info_detailed", root)
+    my_tree = my_tree_view("total_info_detailed", root_main)
 
     # Create a vertical scrollbar
-    vsb = Scrollbar(root, orient="vertical", command=my_tree.yview)
+    vsb = Scrollbar(root_main, orient="vertical", command=my_tree.yview)
     my_tree.configure(yscrollcommand=vsb.set)
 
     # Pack the Treeview and scrollbar into the frame
@@ -122,7 +132,7 @@ def start():
 
     my_tree.bind("<Double-1>", on_double_click)
 
-    root.mainloop()
+    root_main.mainloop()
 
 
 
