@@ -1,6 +1,8 @@
 import tkinter.ttk
 from tkinter import *
 import sqlite3
+import my_main_program_compare_teams
+
 
 
 
@@ -16,7 +18,20 @@ def get_my_tree_data(my_view):
 
 
 def my_tree_view(my_view,root):
+    def sort_treeview(col):
+        pass
+        # global my_tree
+        # # Determine if sorting in ascending or descending order
+        # data = [(my_tree.set(child, col), child) for child in my_tree.get_children("")]
+        # data.sort(reverse=col == my_tree.heading(col, "text")[-1] == "▲")
+        # for i, (val, child) in enumerate(data):
+        #     print(child)
+        #     print(i)
+        #     my_tree.move(child, "", i)
+        # my_tree.heading(col, text=col + (" ▲" if col == my_tree.heading(col, "text")[-1] != "▲" else " ▼"))
+
     my_tree = tkinter.ttk.Treeview(root)
+
 
     if my_view=="total_info_detailed":
         my_view_list = ('Date', 'Hour', 'Home', 'Goal Home', 'Goal Away', 'Away', 'Corner Home',
@@ -35,7 +50,7 @@ def my_tree_view(my_view,root):
 
     my_tree.heading("#0", text="Label")
     for item in my_view_list:
-        my_tree.heading(item, text=item)
+        my_tree.heading(item, text=item, command=lambda: sort_treeview(item))
 
 
     my_tree_data = get_my_tree_data(my_view)
@@ -45,6 +60,8 @@ def my_tree_view(my_view,root):
         counter = counter + 1
     return my_tree
     # my_tree.grid(row=1, column=0, columnspan=3, pady=5, padx=15)
+
+
 
 
 def start():
@@ -77,6 +94,15 @@ def start():
         my_tree.pack(side=LEFT, fill=BOTH, expand=True)
         vsb.pack(side=RIGHT, fill=Y)
 
+    def on_double_click(event):
+        pass
+        # Get the item that was double-clicked
+        item_id = my_tree.identify_row(event.y)
+        if item_id:
+            item = my_tree.item(item_id)
+            item_text = item['values']
+            my_main_program_compare_teams.compare(item_text[2],item_text[5])
+
     clicked = StringVar(root)
     clicked.set(options[0])
     drop = OptionMenu(root, clicked, *options)
@@ -94,7 +120,12 @@ def start():
     my_tree.pack(side=LEFT, fill=BOTH, expand=True)
     vsb.pack(side=RIGHT, fill=Y)
 
+    my_tree.bind("<Double-1>", on_double_click)
+
     root.mainloop()
+
+
+
 
 
 start()
