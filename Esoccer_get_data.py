@@ -1,9 +1,9 @@
-import pandas as pd
 from urllib.request import Request, urlopen
 import sqlite3
 import global_variables
 from datetime import datetime
 import time
+import pandas as pd
 
 
 
@@ -11,7 +11,7 @@ import time
 def my_list_with_esoccer_data(site_page):
     my_list=[]
     try:
-        url = "https://www.totalcorner.com/league/view/12995/page:" + str(site_page)
+        url = global_variables.my_url + str(site_page)
         request = Request(url)
         request.add_header('user-agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36')
         page = urlopen(request)
@@ -141,7 +141,7 @@ def esoccer_move_data():
 
     my_team_player_id=0
 
-    for site_page in range(1, global_variables.my_total_pages):
+    for site_page in range(global_variables.my_first_page, global_variables.my_total_pages):
         conn = sqlite3.connect("my_database_esoccer.db")
         c = conn.cursor()
         if site_page%10 ==0 :
