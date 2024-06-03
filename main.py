@@ -39,9 +39,9 @@ clicked.set(options[0])
 drop = OptionMenu(root, clicked, *options)
 
 my_label_title = Label(root, text="Press the 'Submit' to update the database",font=(20))
-my_label_start_page = Label(root, text="Pages to End search (recomend 20):")
+my_label_start_page = Label(root, text="Pages to Start search (recomend 1):")
 my_entry_start_page=Entry(root)
-my_label_end_page = Label(root, text="Pages to Start Search (recomend 1):")
+my_label_end_page = Label(root, text="Pages to End Search (recomend 20):")
 my_entry_end_page=Entry(root)
 my_label4 = Label(root, text="no use for the moment:")
 pages_entry3=Entry(root)
@@ -51,11 +51,11 @@ my_label_select_if_first_use = Label(root, text="Select if is First Use")
 
 my_label_title.grid(row=0,column=0,columnspan=3,pady=10,padx = 15)
 
-my_label_start_page.grid(row=2,column=0,pady=5,padx = 15)
-my_entry_start_page.grid(row=2,column=1,pady=5,padx = 15)
+my_label_start_page.grid(row=1,column=0,pady=5,padx = 15)
+my_entry_start_page.grid(row=1,column=1,pady=5,padx = 15)
 
-my_label_end_page.grid(row=1,column=0,pady=5,padx = 15)
-my_entry_end_page.grid(row=1,column=1,pady=5,padx = 15)
+my_label_end_page.grid(row=2,column=0,pady=5,padx = 15)
+my_entry_end_page.grid(row=2,column=1,pady=5,padx = 15)
 
 my_label4.grid(row=3,column=0,pady=5,padx = 15)
 pages_entry3.grid(row=3,column=1,pady=5,padx = 15)
@@ -69,4 +69,3 @@ print("----------------THE END-----------------")
 
 
 root.mainloop()
-
