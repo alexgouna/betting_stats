@@ -3,7 +3,7 @@ import Create_my_database_esoccer
 import Esoccer_get_data
 import Esoccer_views
 import global_variables
-import multiprocessing
+import my_main_prorgam
 
 
 
@@ -28,31 +28,12 @@ def database_update():
     # esoccer create views sql strings
     Esoccer_views.create_my_views()
 
-def start_the_program():
-    my_main_prorgam.start()
-
 def submit_button():
-    pass
-    # p1 = multiprocessing.Process(target=start_the_program)
-    # p2 = multiprocessing.Process(target=database_update)
-    #
-    # p1.start()
-    # p2.start()
-    #
-    # p1.join()
-    # p2.join()
-
     database_update()
-    start_the_program()
+    my_main_prorgam.start()
 
 
 if __name__ == '__main__':
-    # p1 = multiprocessing.Process(target=start_the_program)
-    # p2 = multiprocessing.Process(target=database_update)
-    #
-    # p1.start()
-    # p2.start()
-
 
     root = Tk()
     root.title("Main!!!")

@@ -101,8 +101,8 @@ def start():
         if item_id:
             item = my_tree.item(item_id)
             item_text = item['values']
-            my_main_program_compare_teams.compare(item_text[2],item_text[5])
-
+            my_data = my_main_program_compare_teams.compare(item_text[2],item_text[5])
+            print(my_data)
     clicked = StringVar(root)
     clicked.set(options[0])
     drop = OptionMenu(root, clicked, *options)
