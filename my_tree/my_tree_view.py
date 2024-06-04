@@ -26,11 +26,11 @@ def get_my_vertical_scrolbar(my_tree,my_root):
 
 
 
+
 # create my tree
-def my_tree_view_start(my_view,my_view_list,my_root):
+def my_tree_view_start(my_view=None,my_view_list=None,my_root=None,my_data=None):
 
     my_tree = tkinter.ttk.Treeview(my_root)
-
     my_tree['columns'] = my_view_list
 
     my_tree.column("#0", width=0, minwidth=0)
@@ -41,13 +41,19 @@ def my_tree_view_start(my_view,my_view_list,my_root):
     for item in my_view_list:
         my_tree.heading(item,text=item)
 
-    my_tree_data = get_my_tree_data(my_view)
+    if my_data is None:
+        my_tree_data = get_my_tree_data(my_view)
+    else:
+        my_tree_data = my_data
+        print(my_data)
+
     counter = 0
     for data in my_tree_data:
         my_tree.insert(parent='', index='end', iid=str(counter), text='', values=data)
         counter = counter + 1
 
     vsb = get_my_vertical_scrolbar(my_tree,my_root)
+
 
     return my_tree,vsb
 

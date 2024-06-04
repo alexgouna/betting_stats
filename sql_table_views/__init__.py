@@ -1,7 +1,7 @@
 from sql_table_views import Create_my_database
-from sql_table_views import  Create_my_database_esoccer
-from sql_table_views import  Views_esoccer
-from sql_table_views import  Fill_tables_esoccer
+from sql_table_views import Create_my_database_esoccer
+from sql_table_views import Views_esoccer
+from sql_table_views import Fill_tables_esoccer
 
 
 def func_create_my_database():
