@@ -27,6 +27,7 @@ def database_update():
 
 def submit_button():
     database_update()
+    root.destroy()
     my_main_prorgam.start()
 
 
