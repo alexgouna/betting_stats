@@ -79,7 +79,7 @@ def create_table_league_teams():
 
 
 #CREATE THE TABLES
-def create_my_tables():
+def create_my_tables_start():
     global c
     conn = sqlite3.connect("my_database.db")
     c = conn.cursor()

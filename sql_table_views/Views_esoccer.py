@@ -39,7 +39,7 @@ def views_to_drop():
         sql_list_to_drop.append('DROP VIEW IF EXISTS {0}'.format(my_view))
     return sql_list_to_drop
 
-def create_my_views():
+def create_my_views_start():
 
 
     conn = sqlite3.connect("my_database_esoccer.db")

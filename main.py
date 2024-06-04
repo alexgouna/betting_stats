@@ -1,18 +1,14 @@
 from tkinter import *
-import Create_my_database_esoccer
-import Esoccer_get_data
-import Esoccer_views
 import global_variables
 import my_main_prorgam
-
-
+import sql_table_views
 
 
 def database_update():
     try:
-        global_variables.my_total_pages = int(my_entry_end_page.get())
+        global_variables.my_total_pages = int(my_entry_end_page.get())+1
     except:
-        global_variables.my_total_pages=1
+        global_variables.my_total_pages=2
     try:
         global_variables.my_first_page = int(my_entry_start_page.get())
     except:
@@ -20,13 +16,14 @@ def database_update():
 
     # #Creat_my_database.create_my_tables() runs only on debug mode
     if drop =="First Use":
-        Create_my_database_esoccer.create_my_tables()
+        sql_table_views.func_create_my_database_esoccer()
+
 
     # esoccer get data
-    Esoccer_get_data.esoccer_move_data()
+    sql_table_views.func_fill_table_data()
 
     # esoccer create views sql strings
-    Esoccer_views.create_my_views()
+    sql_table_views.func_views_esoccer()
 
 def submit_button():
     database_update()

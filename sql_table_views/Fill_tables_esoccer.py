@@ -135,7 +135,7 @@ def my_games(my_team_player_1_id,my_team_player_2_id,record):
             """.format(my_record[0],my_record[1],my_record[2],my_record[3],my_record[4],my_record[5],my_record[6],my_record[7],my_record[8])
     c.execute(sql)
 
-def esoccer_move_data():
+def fill_table_esoccer_start():
     global c
     global my_team_player_id
 

@@ -105,7 +105,7 @@ def create_table_games():
 
 
 # CREATE THE TABLES
-def create_my_tables():
+def create_my_tables_start():
     global c
     conn = sqlite3.connect("my_database_esoccer.db")
     c = conn.cursor()
