@@ -54,7 +54,7 @@ def tree_on_double_click_start(my_data,selection,my_extra_value):
     if selection == "Players with teams":
         color_cells(treeview[0],my_extra_value)
 
-
+    label = Label(root_tree_on_double_click,text="asdfasdf").pack()
 
     root_tree_on_double_click.mainloop()
     return my_data

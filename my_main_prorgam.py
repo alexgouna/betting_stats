@@ -16,6 +16,7 @@ def my_view_list_select(my_view):
         my_view_list = ('ID', 'Player', 'Team', 'Full Name')
     return my_view_list
 
+
 def start():
     global my_tree
 
@@ -87,7 +88,7 @@ def start():
 
     root_my_main_program.mainloop()
 
-start()
+
 
 
 
