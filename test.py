@@ -1,82 +1,42 @@
-from tkinter import *
-import global_variables
+import tkinter as tk
+class PageUpdateApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.
+        self.root.title("Rather do...")
 
+        self.label = tk.Label(root, text="You are going to update the database!!")
+        self.label.pack(pady=10)
 
+        self.entry = tk.Entry(root)
+        self.entry.pack(pady=10)
 
-#
-# def database_update():
-#     try:
-#         global_variables.my_total_pages = int(my_entry_end_page.get())+1
-#     except:
-#         global_variables.my_total_pages=2
-#     try:
-#         global_variables.my_first_page = int(my_entry_start_page.get())
-#     except:
-#         global_variables.my_first_page=1
-#
-#     # #Creat_my_database.create_my_tables() runs only on debug mode
-#     if drop =="First Use":
-#         sql_table_views.func_create_my_database_esoccer()
-#
-#
-#     # esoccer get data
-#     sql_table_views.func_fill_table_data()
-#
-#     # esoccer create views sql strings
-#     sql_table_views.func_views_esoccer()
-#
-# def submit_button():
-#     # database_update()
-#     # root.destroy()
-#     # my_main_prorgam.start()
+        self.button_frame = tk.Frame(root)
+        self.button_frame.pack(pady=10)
 
+        self.cancel_button = tk.Button(self.button_frame, text="Cancel", command=self.cancel)
+        self.cancel_button.pack(side=tk.LEFT, padx=5)
 
-root = Tk()
-root.title("Maffghjfghjin!!!")
-root.geometry("400x270")
+        self.submit_button = tk.Button(self.button_frame, text="Submit", command=self.submit)
+        self.submit_button.pack(side=tk.LEFT, padx=5)
 
-mainloop()
-#
-# options = [
-#     "Continue",
-#     "First Use"
-# ]
-#
-# clicked = StringVar()
-# clicked.set(options[0])
-# drop = OptionMenu(root, clicked, *options)
+        self.result = None
 
-# my_label_title = Label(root, text="Press the 'Submit' to update the database",font=(20))
-#
-# my_label_start_page = Label(root, text="Pages to Start search (recomend 1):")
-# my_entry_start_page=Entry(root)
-#
-# my_label_end_page = Label(root, text="Pages to End Search (recomend 20):")
-# my_entry_end_page=Entry(root)
-#
-# my_label4 = Label(root, text="no use for the moment:")
-# pages_entry3=Entry(root)
-#
-# button_submit = Button(root,text='Submit',command=submit_button,font=(25))
-# my_label_select_if_first_use = Label(root, text="Select if is First Use")
-#
-#
-# my_label_title.grid(row=0,column=0,columnspan=3,pady=10,padx = 15)
-#
-# my_label_start_page.grid(row=1,column=0,pady=5,padx = 15)
-# my_entry_start_page.grid(row=1,column=1,pady=5,padx = 15)
-#
-# my_label_end_page.grid(row=2,column=0,pady=5,padx = 15)
-# my_entry_end_page.grid(row=2,column=1,pady=5,padx = 15)
-#
-# my_label4.grid(row=3,column=0,pady=5,padx = 15)
-# pages_entry3.grid(row=3,column=1,pady=5,padx = 15)
-#
-# my_label_select_if_first_use.grid(row=4,column=0,pady=5,padx = 15)
-# drop.grid(row=4,column=1,pady=5,padx = 15)
-#
-# button_submit.grid(row=5,column=0,columnspan=2,pady=5,padx = 15)
-#
-# print("----------------THE END-----------------")
+    def cancel(self):
+        self.result = False
+        self.root.quit()
 
+    def submit(self):
+        entry_value = self.entry.get()
+        if entry_value.strip() == "":
+            self.result = True
+        else:
+            self.result = int(entry_value)
+        self.root.quit()
 
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = PageUpdateApp(root)
+    root.mainloop()
+
+    print(app.result)
