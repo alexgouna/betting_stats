@@ -1,5 +1,6 @@
 import sqlite3
-
+from tkinter import *
+from tkinter import messagebox
 import my_table_connection
 import my_table_connection.sql_string as sql_string
 import global_variables
@@ -66,7 +67,8 @@ def get_first_page_data(my_link):
             my_table.append((home_name_player, home_name_team, home_link))
             my_table.append((away_name_player, away_name_team, away_link))
     except Exception as error:
-        print(error)
+        print("'def get_first_page_data(my_link)")
+        print(error.args)
         time.sleep(20)
         get_first_page_data(my_link)
 
@@ -93,6 +95,7 @@ def break_down_all_data(all_data_from_page):
 
     my_table = []
     while True:
+
         date_start = all_data_from_page.find('<td class="text-center">') + 24
         date_end = date_start + 11
 
@@ -133,23 +136,26 @@ def get_detail_team_games_for_each_page(my_link):
 
         # find all tables
         for all_data_from_page in soup.findAll("table"):
+
             my_page_data.append(break_down_all_data(str(all_data_from_page)))
     except Exception as error:
-        print(error)
-        time.sleep(20)
-        get_detail_team_games_for_each_page(my_link)
+        print("'def get_detail_team_games_for_each_page(my_link)'")
+        print(error.args)
+        if not  'invalid literal for int()' in str(error.args):
+            time.sleep(20)
+            get_detail_team_games_for_each_page(my_link)
     return my_page_data[0]
+
+
+
+def last_page(my_link):
+    return global_variables.get_last_page(my_link)
 
 
 def get_detail_team_games(my_link):
     my_table = []
-
-
-    my_last_page = global_variables.get_last_page(my_link) + 1
-
-
-
-    for page in range(1, my_last_page):
+    print(f"my last page is :{last_page(my_link)}")
+    for page in range(1, last_page(my_link)):
         time.sleep(2)
         my_data = get_detail_team_games_for_each_page(my_link + str(page))
 

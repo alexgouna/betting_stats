@@ -1,42 +1,42 @@
-import tkinter as tk
-class PageUpdateApp:
-    def __init__(self, root):
-        self.root = root
-        self.root.
-        self.root.title("Rather do...")
 
-        self.label = tk.Label(root, text="You are going to update the database!!")
-        self.label.pack(pady=10)
+def last_page(my_link):
+    def start_all_pages():
+        global_variables.get_last_page(my_link) + 1
 
-        self.entry = tk.Entry(root)
-        self.entry.pack(pady=10)
+    def start_custom_pages():
+        try:
+            if (int(main_entry.get())) > 1:
+                return int(main_entry.get()) + 1
+        except:
+            messagebox.Message("The value should be number")
 
-        self.button_frame = tk.Frame(root)
-        self.button_frame.pack(pady=10)
+    root = Tk()
+    root.title("Last page")
+    root.geometry("350x150")
 
-        self.cancel_button = tk.Button(self.button_frame, text="Cancel", command=self.cancel)
-        self.cancel_button.pack(side=tk.LEFT, padx=5)
+    main_frame = Frame(root)
+    button_frame = Frame(root)
 
-        self.submit_button = tk.Button(self.button_frame, text="Submit", command=self.submit)
-        self.submit_button.pack(side=tk.LEFT, padx=5)
+    main_frame.pack(fill='both', side='top', expand=True)
+    button_frame.pack(fill='both', side='top', expand=True)
 
-        self.result = None
+    main_label_1 = Label(main_frame,
+                         text="* Press 'ALL' to start redering all data  or\n* Press Custom to render the selected pages",
+                         justify="left", font=('15'))
+    main_label_2 = Label(main_frame, text="Pages:", justify="left", font=('15'))
+    main_entry = Entry(main_frame)
 
-    def cancel(self):
-        self.result = False
-        self.root.quit()
+    main_label_1.grid(row=0, column=0, columnspan=2, padx=10, pady=10)
+    main_label_2.grid(row=1, column=0, padx=10, pady=10)
+    main_entry.grid(row=1, column=1, sticky=W, padx=5)
 
-    def submit(self):
-        entry_value = self.entry.get()
-        if entry_value.strip() == "":
-            self.result = True
-        else:
-            self.result = int(entry_value)
-        self.root.quit()
+    button_all = Button(button_frame, text="ALL", command=start_all_pages, width=10)
+    button_custom = Button(button_frame, text="Custom", command=start_custom_pages, width=10)
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = PageUpdateApp(root)
-    root.mainloop()
+    button_all.pack(side=LEFT, padx=50)
+    button_custom.pack(side=RIGHT, padx=50)
 
-    print(app.result)
+    mainloop()
+
+
+    return global_variables.get_last_page(my_link) + 1
