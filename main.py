@@ -1,7 +1,7 @@
 import multiprocessing
 from tkinter import *
 from tkinter import messagebox
-import global_variables as my_var
+import config
 
 import my_table_connection
 
@@ -22,9 +22,8 @@ def create_database():
 
 def live_page():
     print("live page data")
-
     list_teams_links = []
-    for my_link in my_var.link_main_page:
+    for my_link in config.link_main_page:
         print(my_link)
         list_teams_links.append(my_table_connection.get_first_page_data(my_link))
 
@@ -60,35 +59,25 @@ class DesignMainWindow:
         self.my_button_show_data_details.pack(pady=5)
         self.my_button_create_excell_all_data.pack(pady=5)
 
-        self.root.bind('<Escape>', self.do_nothing)
-
-
-    # def run_in_process_live_page(self):
-    #     self.my_button_live_page_data.config(state=DISABLED)
-    #     answer = messagebox.askyesno("ασδφαφδ")
-    #     if answer:
-    #         self.run_in_process(live_page)
-    #     else:
-    #         self.my_button_live_page_data.config(state=NORMAL)
-
 
     def run_in_process_live_page(self):
         def command_all():
-            my_var.last_page_custom_bool = False
+            config.last_page_custom_bool = False
             self.run_in_process(live_page)
             self.my_button_live_page_data.config(state=DISABLED)
             self.child_root.destroy()
 
         def command_custom():
+
             try:
-                my_var.last_page_custom_page = int(self.my_entry.get())
-                my_var.last_page_custom_bool = True
-                my_var.last_page_custom_page = self.my_entry.get()
+                config.last_page_custom_page = int(self.my_entry.get())
+                config.last_page_custom_bool = True
                 self.run_in_process(live_page)
                 self.my_button_live_page_data.config(state=DISABLED)
                 self.child_root.destroy()
             except:
                 messagebox.showerror("ERROR!!!!", "Put a valid number in the box")
+
 
         def command_cansel():
             self.child_root.destroy()
@@ -127,32 +116,9 @@ class DesignMainWindow:
 
 
 
-
-
-
-        # # answer = messagebox.askyesno("ασδφαφδ")
-        # # self.child_root = Toplevel(self.root)
-        # answer = last_page.my_last_page()
-        # print(answer)
-        # # self.child_root.destroy()
-        # if answer:
-        #     self.run_in_process(live_page)
-        # else:
-        #     self.my_button_live_page_data.config(state=NORMAL)
-
-
-
-
-
-
-
     def run_in_process(self, target):
         process = multiprocessing.Process(target=target)
         process.start()
-
-
-    def do_nothing(self, event):
-        print("escape")
 
 class Start:
     def __init__(self):
@@ -161,6 +127,7 @@ class Start:
         self.root.geometry("800x400")
         self.main_window = DesignMainWindow(self.root)
         mainloop()
+
 
 if __name__ == "__main__":
     multiprocessing.freeze_support()  # For Windows support

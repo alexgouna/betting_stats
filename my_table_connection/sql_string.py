@@ -14,10 +14,10 @@ def create_table(table_name):
                 "game_date"	TEXT,
                 "game_homeplayername"	TEXT,
                 "game_hometeamname"	TEXT,
-                "game_awayplayername"	TEXT,
-                "game_awayteamname"	TEXT,
                 "game_homegoal"	TEXT,
                 "game_awaygoal"	TEXT,
+                "game_awayplayername"	TEXT,
+                "game_awayteamname"	TEXT,
                 PRIMARY KEY("game_id" AUTOINCREMENT)
             );
         """
@@ -47,5 +47,9 @@ WHERE NOT EXISTS (
 
 
 
-
+def excel_extract_data():
+    my_sql_string = f"""
+         SELECT * FROM
+        """
+    return my_sql_string
 

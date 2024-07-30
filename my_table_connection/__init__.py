@@ -1,14 +1,14 @@
 
 import sqlite3
 import my_table_connection.sql_string as sql_string
-import global_variables
+import config
 import my_table_connection.retreive_data
 
 
 def drop_create_table():
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
-    for table_name in global_variables.list_tables:
+    for table_name in config.list_tables:
         try:
             c.execute(sql_string.drop_table(table_name))
         except:

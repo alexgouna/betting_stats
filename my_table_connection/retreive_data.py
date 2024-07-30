@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 import my_table_connection
 import my_table_connection.sql_string as sql_string
-import global_variables
+import config
 import requests
 from bs4 import BeautifulSoup
 import time
@@ -149,12 +149,11 @@ def get_detail_team_games_for_each_page(my_link):
 
 
 def last_page(my_link):
-    return global_variables.get_last_page(my_link)
+    return config.get_last_page(my_link)
 
 
 def get_detail_team_games(my_link):
     my_table = []
-    print(f"my last page is :{last_page(my_link)}")
     for page in range(1, last_page(my_link)):
         time.sleep(2)
         my_data = get_detail_team_games_for_each_page(my_link + str(page))
