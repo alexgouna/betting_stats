@@ -13,6 +13,5 @@ data = {
 df = pd.DataFrame(data)
 
 # Save the DataFrame to an Excel file
-df.to_excel("C:/Users/agoun/Desktop/output.xlsx", index=False)
+df.to_excel("C:/Users/agoun/Desktop/my_games.xlsx", index=False)
 
-print("Data has been successfully extracted to output.xlsx")
