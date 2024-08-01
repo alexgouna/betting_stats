@@ -6,12 +6,6 @@ import config
 import my_table_connection
 
 
-
-
-
-
-
-
 def retrieve_my_data():
     pass
 
@@ -35,8 +29,10 @@ def live_page():
             print(team_detail_games)
 
 
+
+
 def show_detailed_data():
-    pass
+    my_table_connection.show_all_detailed_data()
 
 def create_excell_all_data():
     pass
@@ -50,6 +46,7 @@ class DesignMainWindow:
         self.my_button_live_page_data = Button(self.frame_top, text="get data from live page", command=lambda: self.run_in_process_live_page(), width=30, padx=50, pady=30)
         self.my_button_create_database_and_tables = Button(self.frame_top, text="create database and tables", command=lambda: self.run_in_process(create_database), width=30, padx=50, pady=30)
         self.my_button_show_data_details = Button(self.frame_top, text="Show detailed data", command=show_detailed_data, width=30, padx=50, pady=30)
+        # self.my_button_show_data_two_teams = Button(self.frame_top, text="Show data for two teams", command=show_data_two_teams, width=30, padx=50, pady=30)
         self.my_button_create_excell_all_data = Button(self.frame_top, text="Create excell all data", command=create_excell_all_data, width=30, padx=50, pady=30)
 
         self.frame_top.pack(side=TOP, expand=False, fill=BOTH)
@@ -57,6 +54,7 @@ class DesignMainWindow:
         self.my_button_live_page_data.pack(pady=5)
         self.my_button_create_database_and_tables.pack(pady=5)
         self.my_button_show_data_details.pack(pady=5)
+        # self.my_button_show_data_two_teams.pack(pady=5)
         self.my_button_create_excell_all_data.pack(pady=5)
 
 
@@ -114,7 +112,8 @@ class DesignMainWindow:
         self.my_button_live_page_data.config(state=NORMAL)
 
 
-
+    def run_in_process_show_all_detailed_data(self):
+        self.run_in_process(show_detailed_data)
 
     def run_in_process(self, target):
         process = multiprocessing.Process(target=target)

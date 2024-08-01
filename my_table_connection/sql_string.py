@@ -49,7 +49,9 @@ WHERE NOT EXISTS (
 
 def excel_extract_data():
     my_sql_string = f"""
-         SELECT * FROM
+         SELECT * FROM table_team_games
         """
     return my_sql_string
+
+
 

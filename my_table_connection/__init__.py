@@ -3,6 +3,7 @@ import sqlite3
 import my_table_connection.sql_string as sql_string
 import config
 import my_table_connection.retreive_data
+import my_table_connection.show_detailed_data
 
 
 def drop_create_table():
@@ -37,6 +38,9 @@ def get_first_page_data(my_link):
 def get_detail_team_games(my_link):
     return retreive_data.get_detail_team_games(my_link)
 
+def show_all_detailed_data():
+    return show_detailed_data.main()
+
 
 
 # getting a total page from one game and insert it page by page. also check if record exist
@@ -50,3 +54,13 @@ def import_my_data_to_database(my_data):
             print(error.args)
     conn.commit()
     conn.close()
+
+
+def get_all_data_from_table_team_games():
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    c.execute(sql_string.excel_extract_data())
+    my_data = c.fetchall()
+    conn.commit()
+    conn.close()
+    return my_data

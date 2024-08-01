@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QTableView, QLineEdit, QV
     QHBoxLayout, QSizePolicy, QLabel
 from PyQt5.QtSql import QSqlDatabase, QSqlTableModel
 from PyQt5.QtCore import Qt, QSortFilterProxyModel, pyqtSignal
+from PyQt5.QtGui import QColor, QBrush
 
 
 class FilterProxyModel(QSortFilterProxyModel):
@@ -57,6 +58,35 @@ class FilterProxyModel(QSortFilterProxyModel):
                 return False
 
         return True
+
+    def data(self, index, role=Qt.DisplayRole):
+        if role == Qt.BackgroundRole:
+            col4_index = self.index(index.row(), 4)
+            col5_index = self.index(index.row(), 5)
+            col4_value = self.data(col4_index, Qt.DisplayRole)
+            col5_value = self.data(col5_index, Qt.DisplayRole)
+
+            if col4_value is not None and col5_value is not None:
+                try:
+                    col4_value = float(col4_value)
+                    col5_value = float(col5_value)
+
+                    if col4_value > col5_value:
+                        if index.column() in [2, 3, 4]:
+                            return QBrush(QColor('lightgreen'))
+                        elif index.column() in [5, 6, 7]:
+                            return QBrush(QColor('lightcoral'))
+                    elif col4_value < col5_value:
+                        if index.column() in [2, 3, 4]:
+                            return QBrush(QColor('lightcoral'))
+                        elif index.column() in [5, 6, 7]:
+                            return QBrush(QColor('lightgreen'))
+                    else:
+                        if index.column() in [2, 3, 4, 5, 6, 7]:
+                            return QBrush(QColor('lightyellow'))
+                except ValueError:
+                    pass
+        return super().data(index, role)
 
 
 class MainWindow(QMainWindow):
@@ -167,6 +197,3 @@ def main():
     window.show()
     sys.exit(app.exec_())
 
-
-if __name__ == '__main__':
-    main()
