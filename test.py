@@ -43,6 +43,9 @@ class ResizableFramesApp:
         self.tree_populate()
         self.tree.pack(side=LEFT, fill='both', expand=True)
 
+        self.scrollbar = Scrollbar(self.my_frame_mid, orient=VERTICAL, command=self.tree.yview)
+        self.tree.configure(yscroll=self.scrollbar.set)
+        self.scrollbar.pack(side=LEFT, fill=Y)
     def tree_populate(self):
         for row in self.my_data:
             self.tree.insert('', 'end', values=row[1:])
@@ -88,6 +91,6 @@ class ResizableFramesApp:
 
 if __name__ == "__main__":
     root = Tk()
-    root.geometry("400x600")  # Initial window size
+    root.geometry("800x600")  # Initial window size
     app = ResizableFramesApp(root)
     root.mainloop()
