@@ -1,199 +1,80 @@
-import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTableView, QLineEdit, QVBoxLayout, QWidget, QHeaderView, \
-    QHBoxLayout, QSizePolicy, QLabel
-from PyQt5.QtSql import QSqlDatabase, QSqlTableModel
-from PyQt5.QtCore import Qt, QSortFilterProxyModel, pyqtSignal
-from PyQt5.QtGui import QColor, QBrush
+import PyQt5.QtWidgets as qtw
+import PyQt5.QtGui as qtg
 
 
-class FilterProxyModel(QSortFilterProxyModel):
-    filter_changed = pyqtSignal()
-
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.filters = {}
-        self.global_filter = ""
-
-    def setFilter(self, column, pattern):
-        if pattern:
-            self.filters[column] = pattern
-        else:
-            self.filters.pop(column, None)
-        self.invalidateFilter()
-        self.filter_changed.emit()
-
-    def setGlobalFilter(self, pattern):
-        self.global_filter = pattern.lower()
-        self.invalidateFilter()
-        self.filter_changed.emit()
-
-    def filterAcceptsRow(self, source_row, source_parent):
-        model = self.sourceModel()
-
-        # Columns to apply global filter on
-        global_filter_columns = [2, 3, 6, 7]
-
-        # Check the global filter first
-        if self.global_filter:
-            match_found = False
-            for column in global_filter_columns:
-                index = model.index(source_row, column, source_parent)
-                data = model.data(index)
-                if data is not None:
-                    data_str = str(data).lower()
-                    if self.global_filter in data_str:
-                        match_found = True
-                        break
-            if not match_found:
-                return False
-
-        # Check the column-specific filters
-        for column, pattern in self.filters.items():
-            index = model.index(source_row, column, source_parent)
-            data = model.data(index)
-            if data is None:
-                return False
-            data_str = str(data).lower()
-            if pattern.lower() not in data_str:
-                return False
-
-        return True
-
-    def data(self, index, role=Qt.DisplayRole):
-        if role == Qt.BackgroundRole:
-            col4_index = self.index(index.row(), 4)
-            col5_index = self.index(index.row(), 5)
-            col4_value = self.data(col4_index, Qt.DisplayRole)
-            col5_value = self.data(col5_index, Qt.DisplayRole)
-
-            if col4_value is not None and col5_value is not None:
-                try:
-                    col4_value = float(col4_value)
-                    col5_value = float(col5_value)
-
-                    if col4_value > col5_value:
-                        if index.column() in [2, 3, 4]:
-                            return QBrush(QColor('lightgreen'))
-                        elif index.column() in [5, 6, 7]:
-                            return QBrush(QColor('lightcoral'))
-                    elif col4_value < col5_value:
-                        if index.column() in [2, 3, 4]:
-                            return QBrush(QColor('lightcoral'))
-                        elif index.column() in [5, 6, 7]:
-                            return QBrush(QColor('lightgreen'))
-                    else:
-                        if index.column() in [2, 3, 4, 5, 6, 7]:
-                            return QBrush(QColor('lightyellow'))
-                except ValueError:
-                    pass
-        return super().data(index, role)
-
-
-class MainWindow(QMainWindow):
+class MainWindow(qtw.QWidget):
     def __init__(self):
         super().__init__()
+        self.setWindowTitle('Detailed Data')
 
-        # Set up the main window
-        self.setWindowTitle('Team Games')
-        self.setGeometry(100, 100, 800, 600)
+        # # set vertical layout
+        # self.setLayout(qtw.QVBoxLayout())
 
-        # Set up the database connection
-        self.db = QSqlDatabase.addDatabase('QSQLITE')
-        self.db.setDatabaseName('database.db')
-        self.db.open()
+        # set layout
+        layout_top = qtw.QFormLayout()
+        self.setLayout(layout_top)
 
-        # Set up the table model
-        self.model = QSqlTableModel(self, self.db)
-        self.model.setTable('table_team_games')
-        self.model.select()
+        # set top frame layout
+        label_search=qtw.QLabel('Search :  ')
+        label_search.setFont(qtg.QFont('',15))
 
-        # Set up the filter proxy model
-        self.proxy_model = FilterProxyModel(self)
-        self.proxy_model.setSourceModel(self.model)
-        self.proxy_model.filter_changed.connect(self.update_message_visibility)
 
-        # Set up the table view
-        self.view = QTableView()
-        self.view.setModel(self.proxy_model)
-        self.view.setSortingEnabled(True)  # Enable sorting
+        # set top frame search entry
+        entry_search = qtw.QLineEdit(self)
+        entry_search.setObjectName('Search')
 
-        # Hide the first column (assuming it's an ID column)
-        self.view.setColumnHidden(0, True)
+        entry_search2 = qtw.QLineEdit(self)
+        entry_search2.setObjectName('Search')
 
-        # Set column names
-        column_names = ['Dates', 'Player home', 'Team home', 'Home', 'Away', 'Player away', 'Team away']
-        for col, name in enumerate(column_names, start=1):
-            self.model.setHeaderData(col, Qt.Horizontal, name)
+        layout_top.addRow(label_search,entry_search)
+        layout_top.addRow('label_search', entry_search2)
 
-        # Set the header resize mode to stretch
-        self.view.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        # appear items on top frame
+        # self.layout().addWidget(label_search)
+        # self.layout().addWidget(entry_search)
 
-        # Set up the global filter layout
-        self.global_filter_edit = QLineEdit(self)
-        self.global_filter_edit.setPlaceholderText("Filter specific columns")
-        self.global_filter_edit.textChanged.connect(self.proxy_model.setGlobalFilter)
-        self.global_filter_edit.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
 
-        global_filter_layout = QHBoxLayout()
-        global_filter_layout.addWidget(self.global_filter_edit)
 
-        # Set up the column-specific filter layout
-        self.filter_layout = QHBoxLayout()
-        self.filters = []
-        for col in range(1, self.model.columnCount()):
-            filter_edit = QLineEdit(self)
-            filter_edit.setPlaceholderText(f"Filter {column_names[col - 1]}")
-            filter_edit.textChanged.connect(lambda text, col=col: self.proxy_model.setFilter(col, text))
-            filter_edit.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
-            self.filter_layout.addWidget(filter_edit)
-            self.filters.append(filter_edit)
 
-        # Set up the no data label
-        self.no_data_label = QLabel("asdfasdfasdf")
-        self.no_data_label.setAlignment(Qt.AlignCenter)
-        self.no_data_label.setVisible(False)
 
-        # Arrange the global filter, column-specific filters, table view, and no data label in a vertical layout
-        main_layout = QVBoxLayout()
-        main_layout.addLayout(global_filter_layout)
-        main_layout.addLayout(self.filter_layout)
-        main_layout.addWidget(self.view)
-        main_layout.addWidget(self.no_data_label)
 
-        # Set up the central widget
-        container = QWidget()
-        container.setLayout(main_layout)
-        self.setCentralWidget(container)
 
-        # Connect the sectionResized signal to adjust the filter widths
-        self.view.horizontalHeader().sectionResized.connect(self.update_filter_widths)
 
-        # Initial update of filter widths
-        self.update_filter_widths()
-        self.update_message_visibility()
 
-    def resizeEvent(self, event):
-        super().resizeEvent(event)
-        self.update_filter_widths()
 
-    def update_filter_widths(self):
-        for col in range(1, self.model.columnCount()):
-            width = self.view.columnWidth(col)
-            self.filters[col - 1].setFixedWidth(width)
-        self.global_filter_edit.setFixedWidth(self.view.width() - self.view.verticalScrollBar().width())
 
-    def update_message_visibility(self):
-        if self.proxy_model.rowCount() == 0:
-            self.no_data_label.setVisible(True)
-            self.view.setVisible(False)
-        else:
-            self.no_data_label.setVisible(False)
-            self.view.setVisible(True)
+
+
+
+
+        self.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def main():
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-    sys.exit(app.exec_())
+    app = qtw.QApplication([])
+    mw = MainWindow()
+    app.exec_()
+
+
+main()
+
+
+
 

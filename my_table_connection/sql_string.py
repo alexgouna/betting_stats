@@ -1,4 +1,4 @@
-
+import config
 
 def drop_table(table_name):
     my_sql_string = f"""
@@ -47,10 +47,34 @@ WHERE NOT EXISTS (
 
 
 
-def excel_extract_data():
-    my_sql_string = f"""
-         SELECT * FROM table_team_games
-        """
+def excel_extract_data(my_search_data=None,my_search_areas=None,my_order_by=None):
+    if my_search_data:
+        if my_search_areas:
+            my_sql_string = f"""
+                              SELECT * FROM table_team_games WHERE
+                              {my_search_areas}
+                             """
+        else:
+            my_sql_string = f"""
+                       SELECT * FROM table_team_games WHERE
+                       game_date LIKE '%{my_search_data}%' OR
+                       game_homeplayername LIKE '%{my_search_data}%' OR
+                       game_hometeamname LIKE '%{my_search_data}%' OR
+                       game_homegoal LIKE '%{my_search_data}%' OR
+                       game_awaygoal LIKE '%{my_search_data}%' OR
+                       game_awayplayername LIKE '%{my_search_data}%' OR
+                       game_awayteamname LIKE '%{my_search_data}%'
+                      """
+    else:
+        my_sql_string = f"""
+                     SELECT * FROM table_team_games
+                    """
+
+    if my_order_by:
+        my_sql_string = f"""{my_sql_string} 
+                        ORDER BY {my_order_by}        
+                    """
+    config.my_sql_string_temp = my_sql_string
     return my_sql_string
 
 

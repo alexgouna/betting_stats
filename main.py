@@ -6,6 +6,7 @@ import config
 import my_table_connection
 
 
+
 def retrieve_my_data():
     pass
 
@@ -32,7 +33,9 @@ def live_page():
 
 
 def show_detailed_data():
-    my_table_connection.show_all_detailed_data()
+
+    my_table_connection.show_detailed_data.main()
+
 
 def create_excell_all_data():
     pass

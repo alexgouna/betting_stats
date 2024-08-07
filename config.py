@@ -6,6 +6,7 @@ list_tables=["table_team_games"]
 link_main_page =["https://www.totalcorner.com/league/view/12995"]
 last_page_custom_page = 2
 last_page_custom_bool = False
+my_sql_string_temp = ""
 
 def get_last_page(my_link):
 

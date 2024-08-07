@@ -163,3 +163,16 @@ def get_detail_team_games(my_link):
 
         my_table.append(my_data)
     return (my_table)
+
+
+
+def get_all_data_from_table_team_games(my_search_data=None,my_search_areas=None,my_order_by=None):
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    my_sql = sql_string.excel_extract_data(my_search_data,my_search_areas,my_order_by)
+    print(my_sql)
+    c.execute(my_sql)
+    my_data = c.fetchall()
+    conn.commit()
+    conn.close()
+    return my_data

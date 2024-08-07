@@ -55,12 +55,3 @@ def import_my_data_to_database(my_data):
     conn.commit()
     conn.close()
 
-
-def get_all_data_from_table_team_games():
-    conn = sqlite3.connect('database.db')
-    c = conn.cursor()
-    c.execute(sql_string.excel_extract_data())
-    my_data = c.fetchall()
-    conn.commit()
-    conn.close()
-    return my_data
